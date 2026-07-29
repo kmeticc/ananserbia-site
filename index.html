@@ -550,18 +550,29 @@ function dodajUKorpu() {
 
 function naruciOdmah() {
   const p = prods[tp]; if (!p) return;
+  const i = document.getElementById('mi').value.trim();
+  const t = document.getElementById('mt').value.trim();
+  const a = document.getElementById('ma').value.trim();
+  const g = document.getElementById('mg').value.trim();
+  const n = document.getElementById('mn2').value.trim();
+  if (!i||!t||!a||!g) { alert('Molimo popunite sva obavezna polja.'); return; }
   const sp = getSpecialPrice(tp);
   const qty = isSpecialProd(tp) ? 1 : kol;
   const price = (!isSpecialProd(tp) && kol===2) ? 2700 : (sp || 1500);
-  const existing = cart.find(c => c.id === tp);
-  if (!existing) {
-    cart.push({id:tp,name:p.n,brand:p.b,price:price,qty:qty,img:p.s[0],isMrezice:tp==='bmw-e46-mrezice'});
-  }
-  updateCartUI();
-  closeModal();
-  document.getElementById('cart-form-section').style.display = '';
-  document.getElementById('cart-succ').style.display = 'none';
-  openCart();
+  const c = price.toLocaleString('sr-RS') + ' din';
+  const qtyLabel = tp === 'bmw-e46-mrezice' ? 'par' : qty + ' kom';
+  const fd = new FormData();
+  fd.append('_subject', 'Nova narudzbina - ' + p.n);
+  fd.append('Proizvod', p.n);
+  fd.append('Ime i prezime', i);
+  fd.append('Telefon', t);
+  fd.append('Ulica i broj', a);
+  fd.append('Grad', g);
+  fd.append('Kolicina', qtyLabel + ' - ' + c);
+  if (n) fd.append('Napomena', n);
+  fetch('https://formspree.io/f/maqgevny', {method:'POST', body:fd, headers:{'Accept':'application/json'}}).catch(function(){});
+  document.getElementById('mfc').style.display = 'none';
+  document.getElementById('succ').style.display = 'block';
 }
 
 function updateCartUI() {
@@ -591,25 +602,35 @@ function closeCart() { document.getElementById('cart-overlay').classList.remove(
 function closeCartOut(e) { if(e.target===document.getElementById('cart-overlay')) closeCart(); }
 
 function submitCart() {
-  const i=document.getElementById('ci').value.trim();
-  const t=document.getElementById('ct').value.trim();
-  const a=document.getElementById('ca').value.trim();
-  const g=document.getElementById('cg').value.trim();
-  const n=document.getElementById('cn').value.trim();
-  if(!i||!t||!a||!g){alert('Molimo popunite sva obavezna polja.');return;}
-  if(cart.length===0){alert('Korpa je prazna.');return;}
-  const total=cart.reduce((s,c)=>s+c.price,0);
-  const items=cart.map(c=>c.name+' x'+(c.isMrezice?'par':c.qty)+' = '+c.price+' din').join(', ');
-  const fd=new FormData();
-  fd.append('_subject','Nova narudzbina - Anan Serbia');
-  fd.append('Proizvodi',items);
-  fd.append('Ukupno',total.toLocaleString('sr-RS')+' din');
-  fd.append('Ime i prezime',i);fd.append('Telefon',t);fd.append('Ulica i broj',a);fd.append('Grad',g);
-  if(n)fd.append('Napomena',n);
-  fetch('https://formspree.io/f/maqgevny',{method:'POST',body:fd,headers:{'Accept':'application/json'}}).catch(function(){});
-  cart=[];updateCartUI();
-  document.getElementById('cart-form-section').style.display='none';
-  document.getElementById('cart-succ').style.display='block';
+  const i = document.getElementById('ci').value.trim();
+  const t = document.getElementById('ct').value.trim();
+  const a = document.getElementById('ca').value.trim();
+  const g = document.getElementById('cg').value.trim();
+  const n = document.getElementById('cn').value.trim();
+  if (!i||!t||!a||!g) { alert('Molimo popunite sva obavezna polja.'); return; }
+  if (cart.length === 0) { alert('Korpa je prazna.'); return; }
+  const total = cart.reduce(function(s,c) { return s+c.price; }, 0);
+  const items = cart.map(function(c) { return c.name + ' x' + (c.isMrezice?'par':c.qty) + ' = ' + c.price + ' din'; }).join(', ');
+  const fd = new FormData();
+  fd.append('_subject', 'Nova narudzbina - Anan Serbia');
+  fd.append('Proizvodi', items);
+  fd.append('Ukupno', total.toLocaleString('sr-RS') + ' din');
+  fd.append('Ime i prezime', i);
+  fd.append('Telefon', t);
+  fd.append('Ulica i broj', a);
+  fd.append('Grad', g);
+  if (n) fd.append('Napomena', n);
+  fetch('https://formspree.io/f/maqgevny', {method:'POST', body:fd, headers:{'Accept':'application/json'}}).catch(function(){});
+  // Clear cart and form
+  cart = [];
+  updateCartUI();
+  ['ci','ct','ca','cg','cn'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  // Show success
+  document.getElementById('cart-form-section').style.display = 'none';
+  document.getElementById('cart-succ').style.display = 'block';
 }
 
 function showToast(msg) {
