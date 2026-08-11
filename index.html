@@ -132,13 +132,18 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
 .cart-succ h3{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px}
 .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);padding:10px 20px;font-size:13px;font-family:'DM Sans',sans-serif;opacity:0;transition:all 0.3s;z-index:300;white-space:nowrap;pointer-events:none;border-radius:2px}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .mprice{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);margin:6px 0 2px;letter-spacing:-0.02em}.pcard-price{font-size:16px;font-weight:700;color:var(--ink);margin-top:4px}
-.bonus-section{background:#f0f9f0;border:1px solid #c3e6c3;border-radius:4px;padding:14px;margin-top:4px}
-.bonus-free{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#2d7a2d;margin-bottom:8px}
-.bonus-free svg{flex-shrink:0}
-.bonus-extra{display:flex;align-items:center;gap:10px;cursor:pointer}
-.bonus-extra input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--ink);flex-shrink:0}
-.bonus-extra-label{font-size:13px;color:var(--ink);cursor:pointer;line-height:1.4}
-.bonus-extra-label strong{display:block;font-weight:600}
+.bonus-section{border-top:1px solid var(--border);padding-top:18px;margin-top:10px}
+.bonus-label{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;margin-bottom:11px;line-height:1.5}
+.bonus-label::before{flex-shrink:0}
+.bonus-label::before{content:'';width:18px;height:1px;background:var(--ink)}
+.bonus-extra{display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--cream);border:1px solid var(--border);padding:12px 13px;transition:border-color 0.18s,background 0.18s}
+.bonus-extra:hover{border-color:var(--ink)}
+.bonus-extra:has(input:checked){border-color:var(--ink);background:var(--paper)}
+.bonus-extra input[type=checkbox]{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:1px solid var(--border);background:var(--paper);cursor:pointer;flex-shrink:0;position:relative;margin:0;transition:all 0.15s}
+.bonus-extra input[type=checkbox]:checked{background:var(--ink);border-color:var(--ink)}
+.bonus-extra input[type=checkbox]:checked::after{content:'';position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid var(--paper);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.bonus-extra-label{font-size:13px;color:var(--ink);cursor:pointer;line-height:1.45}
+.bonus-extra-label strong{display:block;font-weight:500}
 .bonus-extra-label span{color:var(--muted);font-size:12px}
 </style>
 </head>
@@ -163,7 +168,7 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
       <a href="#recenzije" class="btn-ghost">&#9733; Recenzije</a>
     </div>
     <div class="hero-stats">
-      <div><div class="st-num">27</div><div class="st-lbl">Proizvoda</div></div>
+      <div><div class="st-num">28</div><div class="st-lbl">Proizvoda</div></div>
       <div><div class="st-num">1-3</div><div class="st-lbl">Dana dostava</div></div>
       <div><div class="st-num">100<em>%</em></div><div class="st-lbl">Pouzeće</div></div>
     </div>
@@ -232,6 +237,7 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
 <div class="pcard" data-brand="bmw" data-id="bmw-e87"><img class="pthumb" loading="lazy" decoding="async" src="images/bmw-e87-thumb.jpg" alt="BMW E87"><div class="poverlay"></div><div class="pinfo"><div class="pbrand">BMW</div><div class="pname">BMW E87<span class="parrow">&#8594;</span></div></div></div>
 <div class="pcard" data-brand="bmw" data-id="bmw-e90-zadnji"><img class="pthumb" loading="lazy" decoding="async" src="images/bmw-e90-zadnji-thumb.jpg" alt="BMW E90/91/92/93 Zadnji"><div class="poverlay"></div><div class="pinfo"><div class="pbrand">BMW</div><div class="pname">BMW E90/91/92/93<span class="parrow">&#8594;</span></div></div></div>
 <div class="pcard" data-brand="bmw" data-id="bmw-e36-maglenke"><img class="pthumb" loading="lazy" decoding="async" src="images/bmw-e36-maglenke-thumb.jpg" alt="BMW E36 Maglenke"><div class="poverlay"></div><div class="pinfo"><div class="pbrand">BMW</div><div class="pname">BMW E36 Maglenke<span class="parrow">&#8594;</span></div></div></div>
+<div class="pcard" data-brand="bmw" data-id="bmw-e36-cajger"><img class="pthumb" loading="lazy" decoding="async" src="images/bmw-e36-cajger-thumb.jpg" alt="BMW E36 Drzac Cajgera"><div class="poverlay"></div><div class="pinfo"><div class="pbrand">BMW</div><div class="pname">BMW E36 Drzac Cajgera<span class="parrow">&#8594;</span></div></div></div>
     <div class="nores" id="nores">Nema proizvoda u ovoj kategoriji.</div>
   </div>
 </div>
@@ -302,15 +308,12 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
           <div class="field"><label>Grad</label><input type="text" id="cg" placeholder="Npr. Beograd, Novi Sad..." oninput="saveCustomerData()"></div>
           <div class="field"><label>Napomena</label><textarea id="cn" placeholder="Opciono..." style="min-height:44px" oninput="saveCustomerData()"></textarea></div>
           <div class="bonus-section">
-            <div class="bonus-free">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#2d7a2d"/><path d="M7 12l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Poklon: Drzaci tablica (prednji set)
-            </div>
+            <div class="bonus-label">Trenutno na popustu uz vas artikal</div>
             <label class="bonus-extra">
-              <input type="checkbox" id="cart-bonus-check" onchange="updateCartUI()">
+              <input type="checkbox" id="cart-bonus-check" onchange="setBonus(this.checked)">
               <div class="bonus-extra-label">
-                <strong>+ Komplet set drzaca tablica</strong>
-                <span>Prednji + zadnji &mdash; samo 300 din</span>
+                <strong>Kompletan set nevidljivih drzaca tablica</strong>
+                <span>Prednja i zadnja &mdash; 300 din</span>
               </div>
             </label>
           </div>
@@ -356,16 +359,13 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
           <div class="field"><label>Ulica i broj</label><input type="text" id="ma" placeholder="Ulica i broj" oninput="saveModalData()"></div>
           <div class="field"><label>Grad</label><input type="text" id="mg" placeholder="Npr. Beograd, Novi Sad..." oninput="saveModalData()"></div>
           <div class="field"><label>Napomena</label><textarea id="mn2" placeholder="Opciono..."></textarea></div>
-          <div class="bonus-section">
-            <div class="bonus-free">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#2d7a2d"/><path d="M7 12l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Poklon: Drzaci tablica (prednji set)
-            </div>
+          <div class="bonus-section" id="modal-bonus">
+            <div class="bonus-label">Trenutno na popustu uz vas artikal</div>
             <label class="bonus-extra">
-              <input type="checkbox" id="bonus-extra-check">
+              <input type="checkbox" id="bonus-extra-check" onchange="setBonus(this.checked)">
               <div class="bonus-extra-label">
-                <strong>+ Komplet set drzaca tablica</strong>
-                <span>Prednji + zadnji &mdash; samo 300 din</span>
+                <strong>Kompletan set nevidljivih drzaca tablica</strong>
+                <span>Prednja i zadnja &mdash; 300 din</span>
               </div>
             </label>
           </div>
@@ -387,7 +387,7 @@ textarea{resize:vertical;min-height:56px}.field{display:flex;flex-direction:colu
 
 <script>
 
-const prods = {"bmw-e90": {"b": "BMW", "n": "BMW E90", "d": "Ventilacioni otvor BMW E90. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e90-1.jpg", "images/bmw-e90-2.jpg"]}, "bmw-e36": {"b": "BMW", "n": "BMW E36", "d": "Ventilacioni otvor BMW E36. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e36-1.jpg", "images/bmw-e36-2.jpg"]}, "bmw-e60": {"b": "BMW", "n": "BMW E60", "d": "Ventilacioni otvor BMW E60. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e60-1.jpg", "images/bmw-e60-2.jpg"]}, "bmw-e46": {"b": "BMW", "n": "BMW E46", "d": "Ventilacioni otvor BMW E46. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e46-1.jpg", "images/bmw-e46-2.jpg"]}, "bmw-e34": {"b": "BMW", "n": "BMW E34", "d": "Centralna konzola BMW E34.", "s": ["images/bmw-e34-1.jpg", "images/bmw-e34-2.jpg"]}, "bmw-e30": {"b": "BMW", "n": "BMW E30", "d": "Centralna konzola BMW E30.", "s": ["images/bmw-e30-1.jpg"]}, "bmw-e36c": {"b": "BMW", "n": "BMW E36 Compact", "d": "Centralna konzola BMW E36 Compact.", "s": ["images/bmw-e36c-1.jpg", "images/bmw-e36c-2.jpg"]}, "audi-a4-b5": {"b": "AUDI", "n": "Audi A4 B5", "d": "Ventilacioni otvor Audi A4 B5. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a4-b5-1.jpg", "images/audi-a4-b5-2.jpg"]}, "audi-a4-b6": {"b": "AUDI", "n": "Audi A4 B6", "d": "Ventilacioni otvor Audi A4 B6. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a4-b6-1.jpg", "images/audi-a4-b6-2.jpg"]}, "audi-a6-c4": {"b": "AUDI", "n": "Audi A6 C4", "d": "Centralna konzola Audi A6 C4.", "s": ["images/audi-a6-c4-1.jpg"]}, "audi-80-b4": {"b": "AUDI", "n": "Audi 80 B4", "d": "Centralna konzola Audi 80 B4.", "s": ["images/audi-80-b4-1.jpg"]}, "vw-golf2": {"b": "VW", "n": "VW Golf 2", "d": "Centralna konzola VW Golf 2.", "s": ["images/vw-golf2-1.jpg", "images/vw-golf2-2.jpg"]}, "vw-golf3": {"b": "VW", "n": "VW Golf 3", "d": "Centralna konzola VW Golf 3.", "s": ["images/vw-golf3-1.jpg"]}, "vw-golf4": {"b": "VW", "n": "VW Golf 4", "d": "Centralna konzola VW Golf 4.", "s": ["images/vw-golf4-1.jpg"]}, "opel-astra-h": {"b": "OPEL", "n": "Opel Astra H", "d": "Centralna konzola Opel Astra H. Montaza 30 sekundi, bez alata.", "s": ["images/opel-astra-h-1.jpg", "images/opel-astra-h-2.jpg"]}, "seat-leon1": {"b": "SEAT", "n": "Seat Leon 1", "d": "Centralna konzola Seat Leon 1 / Toledo 2 / Audi A3.", "s": ["images/seat-leon1-1.jpg", "images/seat-leon1-2.jpg"]}, "bmw-e34-usis": {"b": "BMW", "n": "BMW E34 Usis", "d": "Usis farova BMW E34. Samo 1 komad dostupan.", "s": ["images/bmw-e34-usis-1.jpg"]}, "audi-a3-8p": {"b": "AUDI", "n": "Audi A3 8P", "d": "Centralna konzola Audi A3 8P. Samo 1 komad dostupan.", "s": ["images/audi-a3-8p-1.jpg"]}, "bmw-e46-zadnji": {"b": "BMW", "n": "BMW E46 Zadnji", "d": "Zadnji cupholder BMW E46.", "s": ["images/bmw-e46-zadnji-1.jpg", "images/bmw-e46-zadnji-2.jpg"]}, "bmw-e46-mrezice": {"b": "BMW", "n": "BMW E46 Mrezice MTech", "d": "Mrezice za MTech branik BMW E46. Set leva + desna strana.", "s": ["images/bmw-e46-mrezice-1.jpg", "images/bmw-e46-mrezice-2.jpg"]}, "audi-a3-8l": {"b": "AUDI", "n": "Audi A3 8L", "d": "Ventilacioni otvor Audi A3 8L. Montaza 30 sekundi, bez alata.", "s": ["images/seat-leon1-1.jpg", "images/seat-leon1-2.jpg"]}, "audi-a6-c5": {"b": "AUDI", "n": "Audi A6 C5", "d": "Ventilacioni otvor Audi A6 C5. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a6-c5-1.jpg", "images/audi-a6-c5-2.jpg"]}, "vw-golf3-prednji": {"b": "VW", "n": "VW Golf 3 Prednji", "d": "Prednji cupholder VW Golf 3. Samo 1 komad.", "s": ["images/vw-golf3-prednji-1.jpg", "images/vw-golf3-prednji-2.jpg"]}, "bmw-e36-srednji": {"b": "BMW", "n": "BMW E36 Srednji", "d": "Srednji cupholder BMW E36. Samo 1 komad.", "s": ["images/bmw-e36-srednji-1.jpg", "images/bmw-e36-srednji-2.jpg"]}, "bmw-e87": {"b": "BMW", "n": "BMW E87", "d": "Cupholder BMW E87. Samo 1 komad.", "s": ["images/bmw-e87-1.jpg"]}, "bmw-e90-zadnji": {"b": "BMW", "n": "BMW E90/91/92/93", "d": "Cupholder BMW E90/91/92/93. Samo 1 komad.", "s": ["images/bmw-e90-zadnji-1.jpg"]}, "bmw-e36-maglenke": {"b": "BMW", "n": "BMW E36 Maglenke", "d": "Mrezice za otvore maglenki na braniku BMW E36. Set leva + desna strana, prodaje se u paru.", "s": ["images/bmw-e36-maglenke-1.jpg"]}};
+const prods = {"bmw-e90": {"b": "BMW", "n": "BMW E90", "d": "Ventilacioni otvor BMW E90. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e90-1.jpg", "images/bmw-e90-2.jpg"]}, "bmw-e36": {"b": "BMW", "n": "BMW E36", "d": "Ventilacioni otvor BMW E36. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e36-1.jpg", "images/bmw-e36-2.jpg"]}, "bmw-e60": {"b": "BMW", "n": "BMW E60", "d": "Ventilacioni otvor BMW E60. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e60-1.jpg", "images/bmw-e60-2.jpg"]}, "bmw-e46": {"b": "BMW", "n": "BMW E46", "d": "Ventilacioni otvor BMW E46. Montaza 30 sekundi, bez alata.", "s": ["images/bmw-e46-1.jpg", "images/bmw-e46-2.jpg"]}, "bmw-e34": {"b": "BMW", "n": "BMW E34", "d": "Centralna konzola BMW E34.", "s": ["images/bmw-e34-1.jpg", "images/bmw-e34-2.jpg"]}, "bmw-e30": {"b": "BMW", "n": "BMW E30", "d": "Centralna konzola BMW E30.", "s": ["images/bmw-e30-1.jpg"]}, "bmw-e36c": {"b": "BMW", "n": "BMW E36 Compact", "d": "Centralna konzola BMW E36 Compact.", "s": ["images/bmw-e36c-1.jpg", "images/bmw-e36c-2.jpg"]}, "audi-a4-b5": {"b": "AUDI", "n": "Audi A4 B5", "d": "Ventilacioni otvor Audi A4 B5. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a4-b5-1.jpg", "images/audi-a4-b5-2.jpg"]}, "audi-a4-b6": {"b": "AUDI", "n": "Audi A4 B6", "d": "Ventilacioni otvor Audi A4 B6. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a4-b6-1.jpg", "images/audi-a4-b6-2.jpg"]}, "audi-a6-c4": {"b": "AUDI", "n": "Audi A6 C4", "d": "Centralna konzola Audi A6 C4.", "s": ["images/audi-a6-c4-1.jpg"]}, "audi-80-b4": {"b": "AUDI", "n": "Audi 80 B4", "d": "Centralna konzola Audi 80 B4.", "s": ["images/audi-80-b4-1.jpg"]}, "vw-golf2": {"b": "VW", "n": "VW Golf 2", "d": "Centralna konzola VW Golf 2.", "s": ["images/vw-golf2-1.jpg", "images/vw-golf2-2.jpg"]}, "vw-golf3": {"b": "VW", "n": "VW Golf 3", "d": "Centralna konzola VW Golf 3.", "s": ["images/vw-golf3-1.jpg"]}, "vw-golf4": {"b": "VW", "n": "VW Golf 4", "d": "Centralna konzola VW Golf 4.", "s": ["images/vw-golf4-1.jpg"]}, "opel-astra-h": {"b": "OPEL", "n": "Opel Astra H", "d": "Centralna konzola Opel Astra H. Montaza 30 sekundi, bez alata.", "s": ["images/opel-astra-h-1.jpg", "images/opel-astra-h-2.jpg"]}, "seat-leon1": {"b": "SEAT", "n": "Seat Leon 1", "d": "Centralna konzola Seat Leon 1 / Toledo 2 / Audi A3.", "s": ["images/seat-leon1-1.jpg", "images/seat-leon1-2.jpg"]}, "bmw-e34-usis": {"b": "BMW", "n": "BMW E34 Usis", "d": "Usis farova BMW E34. Samo 1 komad dostupan.", "s": ["images/bmw-e34-usis-1.jpg"]}, "audi-a3-8p": {"b": "AUDI", "n": "Audi A3 8P", "d": "Centralna konzola Audi A3 8P. Samo 1 komad dostupan.", "s": ["images/audi-a3-8p-1.jpg"]}, "bmw-e46-zadnji": {"b": "BMW", "n": "BMW E46 Zadnji", "d": "Zadnji cupholder BMW E46.", "s": ["images/bmw-e46-zadnji-1.jpg", "images/bmw-e46-zadnji-2.jpg"]}, "bmw-e46-mrezice": {"b": "BMW", "n": "BMW E46 Mrezice MTech", "d": "Mrezice za MTech branik BMW E46. Set leva + desna strana.", "s": ["images/bmw-e46-mrezice-1.jpg", "images/bmw-e46-mrezice-2.jpg"]}, "audi-a3-8l": {"b": "AUDI", "n": "Audi A3 8L", "d": "Ventilacioni otvor Audi A3 8L. Montaza 30 sekundi, bez alata.", "s": ["images/seat-leon1-1.jpg", "images/seat-leon1-2.jpg"]}, "audi-a6-c5": {"b": "AUDI", "n": "Audi A6 C5", "d": "Ventilacioni otvor Audi A6 C5. Montaza 30 sekundi, bez alata.", "s": ["images/audi-a6-c5-1.jpg", "images/audi-a6-c5-2.jpg"]}, "vw-golf3-prednji": {"b": "VW", "n": "VW Golf 3 Prednji", "d": "Prednji cupholder VW Golf 3. Samo 1 komad.", "s": ["images/vw-golf3-prednji-1.jpg", "images/vw-golf3-prednji-2.jpg"]}, "bmw-e36-srednji": {"b": "BMW", "n": "BMW E36 Srednji", "d": "Srednji cupholder BMW E36. Samo 1 komad.", "s": ["images/bmw-e36-srednji-1.jpg", "images/bmw-e36-srednji-2.jpg"]}, "bmw-e87": {"b": "BMW", "n": "BMW E87", "d": "Cupholder BMW E87. Samo 1 komad.", "s": ["images/bmw-e87-1.jpg"]}, "bmw-e90-zadnji": {"b": "BMW", "n": "BMW E90/91/92/93", "d": "Cupholder BMW E90/91/92/93. Samo 1 komad.", "s": ["images/bmw-e90-zadnji-1.jpg"]}, "bmw-e36-maglenke": {"b": "BMW", "n": "BMW E36 Maglenke", "d": "Mrezice za otvore maglenki na braniku BMW E36. Set leva + desna strana, prodaje se u paru.", "s": ["images/bmw-e36-maglenke-1.jpg"]}, "bmw-e36-cajger": {"b": "BMW", "n": "BMW E36 Drzac Cajgera", "d": "Drzac za cajger 52mm. Odgovara bilo kom cajgeru precnika 52mm.", "s": ["images/bmw-e36-cajger-1.jpg"]}};
 const modeli = {
   bmw:  [['e30','E30'],['e34','E34'],['e36','E36'],['e36c','E36 Compact'],['e46','E46'],['e60','E60'],['e87','E87'],['e90','E90 / E91 / E92 / E93']],
   audi: [['80b4','80 B4'],['a3-8l','A3 8L'],['a3-8p','A3 8P'],['a4b5','A4 B5'],['a4b6','A4 B6'],['a6c4','A6 C4'],['a6c5','A6 C5']],
@@ -399,7 +399,7 @@ const modeli = {
 const mmap = {
   'bmw-e30':['bmw-e30'],
   'bmw-e34':['bmw-e34','bmw-e34-usis'],
-  'bmw-e36':['bmw-e36','bmw-e36-srednji','bmw-e36-maglenke'],
+  'bmw-e36':['bmw-e36','bmw-e36-srednji','bmw-e36-maglenke','bmw-e36-cajger'],
   'bmw-e36c':['bmw-e36c'],
   'bmw-e46':['bmw-e46','bmw-e46-zadnji','bmw-e46-mrezice'],
   'bmw-e60':['bmw-e60'],
@@ -422,7 +422,7 @@ const mmap = {
 /* ====== JEDINO MESTO ZA CENE - promeni ovde i menja se svuda ====== */
 const BASE1 = 1500;        // standardni cupholder, 1 kom
 const BASE2 = 2700;        // standardni cupholder, 2 kom (-10%)
-const BONUS_EXTRA = 300;   // komplet set drzaca tablica
+const BONUS_EXTRA = 300;   // kompletan set nevidljivih drzaca tablica
 const PRICES = {
   'bmw-e34-usis':    2000,
   'audi-a3-8p':      1900,
@@ -430,6 +430,7 @@ const PRICES = {
   'bmw-e36':         1500,
   'bmw-e46-mrezice': 1500,
   'bmw-e36-maglenke':1500,
+  'bmw-e36-cajger':      1000,
   'vw-golf3-prednji':1800,
   'bmw-e36-srednji': 1800,
   'bmw-e87':         1700,
@@ -521,6 +522,12 @@ function openModal(id) {
   });
   ts = 0; updS();
 
+  // dodatak se nudi samo jednom po porudzbini
+  const mb = document.getElementById('modal-bonus');
+  if (mb) mb.style.display = cart.length > 0 ? 'none' : '';
+  const mbc = document.getElementById('bonus-extra-check');
+  if (mbc) mbc.checked = bonusSelected;
+
   const q1 = document.getElementById('q1');
   const q2 = document.getElementById('q2');
   const qtyField = document.getElementById('qty-field');
@@ -576,6 +583,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 let cart = [];
+let bonusSelected = false;
+
+// dodatak se bira jednom po porudzbini, bez obzira na broj proizvoda
+function setBonus(v) {
+  bonusSelected = !!v;
+  const a = document.getElementById('bonus-extra-check');
+  const b = document.getElementById('cart-bonus-check');
+  if (a) a.checked = bonusSelected;
+  if (b) b.checked = bonusSelected;
+  updateCartUI();
+}
 
 function dodajUKorpu() {
   const p = prods[tp]; if (!p) return;
@@ -605,15 +623,14 @@ function naruciOdmah() {
   if (!i||!t||!a||!g) { alert('Molimo popunite sva obavezna polja.'); return; }
 
   const price = priceFor(tp, kol);
-  const bonusExtra = document.getElementById('bonus-extra-check') && document.getElementById('bonus-extra-check').checked;
+  const bonusExtra = bonusSelected;
   const totalPrice = price + (bonusExtra ? BONUS_EXTRA : 0);
 
   const fd = new FormData();
   fd.append('_subject', 'Nova narudzbina - ' + p.n);
   fd.append('Proizvod', p.n);
   fd.append('Kolicina', qtyLabelFor(tp, kol) + ' - ' + fmt(price));
-  fd.append('Poklon', 'Drzaci tablica - prednji set');
-  if (bonusExtra) fd.append('Komplet set drzaca tablica', 'prednji + zadnji - ' + fmt(BONUS_EXTRA));
+  if (bonusExtra) fd.append('Dodatak', 'Kompletan set nevidljivih drzaca tablica - ' + fmt(BONUS_EXTRA));
   fd.append('Ukupno', fmt(totalPrice));
   fd.append('Ime i prezime', i);
   fd.append('Telefon', t);
@@ -629,7 +646,8 @@ function naruciOdmah() {
 
 function updateCartUI() {
   const bx = document.getElementById('cart-bonus-check');
-  const total = cart.reduce((s,c) => s+c.price, 0) + (bx && bx.checked ? BONUS_EXTRA : 0);
+  if (bx) bx.checked = bonusSelected;
+  const total = cart.reduce((s,c) => s+c.price, 0) + (bonusSelected ? BONUS_EXTRA : 0);
   const badge = document.getElementById('cart-badge');
   badge.style.display = cart.length > 0 ? 'flex' : 'none';
   badge.textContent = cart.length;
@@ -667,14 +685,13 @@ function submitCart() {
   const n = document.getElementById('cn').value.trim();
   if (!i||!t||!a||!g) { alert('Molimo popunite sva obavezna polja.'); return; }
   if (cart.length === 0) { alert('Korpa je prazna.'); return; }
-  const bonusExtra = document.getElementById('cart-bonus-check') && document.getElementById('cart-bonus-check').checked;
+  const bonusExtra = bonusSelected;
   const total = cart.reduce(function(s,c) { return s+c.price; }, 0) + (bonusExtra ? BONUS_EXTRA : 0);
   const items = cart.map(function(c) { return c.name + ' x' + (c.pair?'par':c.qty) + ' = ' + fmt(c.price); }).join(', ');
   const fd = new FormData();
   fd.append('_subject', 'Nova narudzbina - Anan Serbia');
   fd.append('Proizvodi', items);
-  fd.append('Poklon', 'Drzaci tablica - prednji set');
-  if (bonusExtra) fd.append('Komplet set drzaca tablica', 'prednji + zadnji - ' + fmt(BONUS_EXTRA));
+  if (bonusExtra) fd.append('Dodatak', 'Kompletan set nevidljivih drzaca tablica - ' + fmt(BONUS_EXTRA));
   fd.append('Ukupno', fmt(total));
   fd.append('Ime i prezime', i);
   fd.append('Telefon', t);
@@ -683,6 +700,7 @@ function submitCart() {
   if (n) fd.append('Napomena', n);
   fetch('https://formspree.io/f/maqgevny', {method:'POST', body:fd, headers:{'Accept':'application/json'}}).catch(function(){});
   cart = [];
+  bonusSelected = false;
   updateCartUI();
   // Clear saved data after successful order
   window._customerData = null;
